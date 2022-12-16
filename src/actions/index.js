@@ -23,3 +23,17 @@ export const heroDeleted = (id) => {
         payload: id
     }
 }
+
+export const heroCreated= (hero) => {
+    return {
+        type: 'HERO_CREATED',
+        payload: hero
+    }
+}
+
+export const activeFilterChanged = (filter) => {
+    return {
+        type: 'ACTIVE_FILTER_CHANGED',
+        payload: filter
+    }
+}
