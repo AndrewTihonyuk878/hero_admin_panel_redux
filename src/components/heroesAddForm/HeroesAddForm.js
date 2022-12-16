@@ -21,6 +21,7 @@ const HeroesAddForm = () => {
     const [heroDescr, setHeroDescr] = useState('')
     const [heroElement, setHeroElement] = useState('')
 
+    const {filters, filterLoadingStatus} = useSelector(state => state)
     const dispatch = useDispatch()
     const {request} = useHttp()
 
@@ -38,6 +39,27 @@ const HeroesAddForm = () => {
         .then(res => console.log(res, 'Відправка успішна'))
         .then(dispatch(heroCreated(newHero)))
         .catch(err => console.log('Щось пішло не так :('))
+
+        setHeroName('')
+        setHeroDescr('')
+        setHeroElement('')
+    }
+
+    const renderFilters = (filters, status) => {
+        if (status === "loading") {
+            return <option>Загрузка елементів</option>
+        } else if (status === "error") {
+            return <option>Помилка загрузки</option>
+        }
+        
+        //якщо фільтри є, то рендеримо їх
+        if (filters && filters.length > 0) {
+            return filters.map(({name, label}) => {
+                if (name === 'all') return
+
+                return <option key={name} value={name}>{label}</option>
+            })
+        }
     }
 
     return (
@@ -78,10 +100,11 @@ const HeroesAddForm = () => {
                     value={heroElement}
                     onChange={(e) => setHeroElement(e.target.value)}>
                     <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
+{/*                     <option value="fire">Огонь</option>
                     <option value="water">Вода</option>
                     <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    <option value="earth">Земля</option> */}
+                    {renderFilters(filters, filterLoadingStatus)}
                 </select>
             </div>
 
