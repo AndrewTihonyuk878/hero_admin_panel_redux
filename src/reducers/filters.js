@@ -4,7 +4,7 @@ const initialState = {
     activeFilter: "all"
 }
 
-const reducer = (state = initialState, action) => {
+const filters = (state = initialState, action) => {
     switch (action.type) {
         case 'FILTERS_FETCHING':
             return {
@@ -32,4 +32,4 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-export default reducer
+export default filters
